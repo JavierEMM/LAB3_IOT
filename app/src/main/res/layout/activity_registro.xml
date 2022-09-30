@@ -1,9 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistroActivity">
+    android:nestedScrollingEnabled="false"
+    android:orientation="horizontal"
+    android:outlineProvider="none" >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/nombremascota"
+            android:layout_width="113dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="144dp"
+            android:layout_marginBottom="141dp"
+            android:text="Nombre mascota"
+            app:layout_constraintBottom_toBottomOf="@+id/dni"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="127dp"
+            android:text="Género"
+            app:layout_constraintEnd_toStartOf="@+id/spingender"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nombremascota" />
+
+        <TextView
+            android:id="@+id/nombredueno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:text="Nombre dueño"
+            app:layout_constraintEnd_toEndOf="@+id/gender"
+            app:layout_constraintStart_toEndOf="@+id/gender"
+            app:layout_constraintTop_toTopOf="@+id/editnombredueno" />
+
+        <TextView
+            android:id="@+id/dni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="33dp"
+            android:text="DNI"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nombredueno" />
+
+        <TextView
+            android:id="@+id/descripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Descripcion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dni" />
+
+        <EditText
+            android:id="@+id/editnombredueno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            app:layout_constraintBottom_toTopOf="@+id/editdni"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <EditText
+            android:id="@+id/editnombremasc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="41dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            app:layout_constraintBottom_toTopOf="@+id/editnombredueno"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <EditText
+            android:id="@+id/editdni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="277dp"
+            android:layout_marginEnd="15dp"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spingender"
+            android:layout_width="0dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="53dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="55dp"
+            app:layout_constraintBottom_toBottomOf="@+id/editnombredueno"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gender"
+            app:layout_constraintTop_toTopOf="@+id/editnombremasc" />
+
+        <EditText
+            android:id="@+id/editdescripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="1dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="@+id/editdni"
+            app:layout_constraintTop_toBottomOf="@+id/editdni" />
+
+        <Button
+            android:id="@+id/btnregistrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="49dp"
+            android:backgroundTint="#FFC107"
+            android:text="Registrar"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editdescripcion" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
