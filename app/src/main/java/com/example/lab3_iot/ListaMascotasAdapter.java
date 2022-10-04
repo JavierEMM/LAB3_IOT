@@ -1,4 +1,4 @@
-package com.example.lab3_iot.entity;
+package com.example.lab3_iot;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lab3_iot.R;
+import com.example.lab3_iot.entity.Mascota;
 
 public class ListaMascotasAdapter extends RecyclerView.Adapter<ListaMascotasAdapter.MascotaViewHolder> {
 
@@ -49,12 +49,7 @@ public class ListaMascotasAdapter extends RecyclerView.Adapter<ListaMascotasAdap
         tvDuenho.setText(mascota.getNombreDuenho());
         tvDNI.setText(mascota.getDni());
         tvDescripcion.setText(mascota.getDescripcion());
-        //tvRuta.setText(mascota.getRuta());
-
-
-
-
-
+        tvRuta.setText((mascota.getRuta() == null || mascota.getRuta().equals("")) ? "-" : mascota.getRuta());
 
     }
 

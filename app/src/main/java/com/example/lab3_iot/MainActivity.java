@@ -1,14 +1,10 @@
 package com.example.lab3_iot;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-
-import com.example.lab3_iot.entity.ListaMascotasAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
