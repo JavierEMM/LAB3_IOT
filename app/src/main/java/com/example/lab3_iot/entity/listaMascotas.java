@@ -25,7 +25,7 @@ public class listaMascotas {
         for(Mascota mascota: listaMascotas){
             parametros="";
             parametros+="Nombre: "+mascota.getNombre()+"\n";
-            parametros+="Genero: "+genero(mascota.getGenero()+0)+"\n";
+            parametros+="Genero: "+mascota.getGenero()+"\n";
             parametros+="Nombre Dueño: "+mascota.getNombreDuenho()+"\n";
             parametros+="DNI: "+mascota.getDni()+"\n";
             parametros+="Descripcion: "+mascota.getDescripcion()+"\n";

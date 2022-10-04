@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Mascota implements Serializable{
 
     private String nombre;
-    private int genero;
+    private String genero;
     private String nombreDuenho;
     private int dni;
     private String descripcion;
@@ -19,11 +19,11 @@ public class Mascota implements Serializable{
         this.nombre = nombre;
     }
 
-    public int getGenero() {
+    public String getGenero() {
         return genero;
     }
 
-    public void setGenero(int genero) {
+    public void setGenero(String genero) {
         this.genero = genero;
     }
 
@@ -51,7 +51,7 @@ public class Mascota implements Serializable{
         this.descripcion = descripcion;
     }
 
-    public Mascota(String nombre, int genero, String nombreDuenho, int dni, String descripcion) {
+    public Mascota(String nombre, String genero, String nombreDuenho, int dni, String descripcion) {
         this.nombre = nombre;
         this.genero = genero;
         this.nombreDuenho = nombreDuenho;

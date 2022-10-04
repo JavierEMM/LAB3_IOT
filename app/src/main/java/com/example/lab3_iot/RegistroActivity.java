@@ -22,7 +22,7 @@ import java.util.List;
 public class RegistroActivity extends AppCompatActivity {
 
     public listaMascotas mascotas = null;
-    int genero;
+    String genero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +30,9 @@ public class RegistroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
 
         List<String> genderSpinner = new ArrayList<>();
-        genderSpinner.add(0,"F/M");
-        genderSpinner.add(1, "F");
-        genderSpinner.add(2, "M");
+        genderSpinner.add("F-M");
+        genderSpinner.add("F");
+        genderSpinner.add("M");
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,genderSpinner);
         Spinner spinner = findViewById(R.id.spinner);
@@ -41,9 +41,9 @@ public class RegistroActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                int opcionSpinner = Integer.parseInt(spinner.getSelectedItem().toString());
-                if (opcionSpinner == 0) {
-                    genero = 0;
+                String opcionSpinner = spinner.getSelectedItem().toString();
+                if (opcionSpinner == "F-M") {
+                    genero = "-";
                 } else {
                     genero = opcionSpinner;
                 }
@@ -51,7 +51,7 @@ public class RegistroActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                genero = 0;
+                genero = "-";
             }
         });
 
