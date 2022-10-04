@@ -16,18 +16,25 @@ import android.widget.Spinner;
 import com.example.lab3_iot.entity.Mascota;
 import com.example.lab3_iot.entity.listaMascotas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegistroActivity extends AppCompatActivity {
 
-    public listaMascotas mascotas = null;
+    public ArrayList<Mascota> mascotas;
     String genero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+        Intent intent = getIntent();
+        if(intent.getSerializableExtra("lista") != null){
+            mascotas = (ArrayList<Mascota>) intent.getSerializableExtra("lista");
+        }else{
+            mascotas = new ArrayList<>();
+        }
 
         List<String> genderSpinner = new ArrayList<>();
         genderSpinner.add("F-M");
@@ -54,17 +61,13 @@ public class RegistroActivity extends AppCompatActivity {
                 genero = "-";
             }
         });
-
-        Intent intent = getIntent();
-        listaMascotas lista_aux = (listaMascotas) intent.getSerializableExtra("lista");
-        mascotas = lista_aux;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
         if(item.getItemId() == android.R.id.home){
             Intent intent1 = new Intent(RegistroActivity.this,MainActivity.class);
-            intent1.putExtra("lista", (Parcelable) mascotas);
+            intent1.putExtra("lista", (Serializable) mascotas);
             startActivity(intent1);
             this.finish();
             return true;
@@ -101,10 +104,10 @@ public class RegistroActivity extends AppCompatActivity {
 
         if (guardar) {
             Mascota mascota = new Mascota(nombre.getText().toString(),genero,nombreDuenho.getText().toString(),Integer.parseInt(dni.getText().toString()),descripcion.getText().toString());
-            mascotas.getListaMascotas().add(mascota);
+            mascotas.add(mascota);
 
             Intent intent = new Intent(RegistroActivity.this,MainActivity.class);
-            intent.putExtra("lista", (Parcelable) mascotas);
+            intent.putExtra("lista", (Serializable) mascotas);
             startActivity(intent);
         }
 
