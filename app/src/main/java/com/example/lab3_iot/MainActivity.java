@@ -1,12 +1,19 @@
 package com.example.lab3_iot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.lab3_iot.entity.ListaMascotasAdapter;
+
 public class MainActivity extends AppCompatActivity {
+
+    ListaMascotasAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this,EmergenciaActivity.class);
             startActivity(intent);
         });
+
+        //realacion con el recycle view
+        //descomentar el recycle view cuaando tengamos el layout
+
+        //RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView.setAdapter(adapter);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
     }
 
 }
