@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/mascotaView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="60dp"
+        android:text="Mascota:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/generoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Género:"
+        app:layout_constraintStart_toStartOf="@+id/mascotaView"
+        app:layout_constraintTop_toBottomOf="@+id/mascotaView" />
+
+    <TextView
+        android:id="@+id/duenoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dueño:"
+        app:layout_constraintStart_toStartOf="@+id/generoView"
+        app:layout_constraintTop_toBottomOf="@+id/generoView" />
+
+    <TextView
+        android:id="@+id/rutaView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ruta:"
+        app:layout_constraintStart_toStartOf="@+id/descripcionView"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionView" />
+
+    <TextView
+        android:id="@+id/dniView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DNI:"
+        app:layout_constraintStart_toStartOf="@+id/duenoView"
+        app:layout_constraintTop_toBottomOf="@+id/duenoView" />
+
+    <TextView
+        android:id="@+id/descripcionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción:"
+        app:layout_constraintStart_toStartOf="@+id/dniView"
+        app:layout_constraintTop_toBottomOf="@+id/dniView" />
+
+    <TextView
+        android:id="@+id/mascota_rv"
+        android:layout_width="174dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="120dp"
+        android:text="Archie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.21"
+        app:layout_constraintStart_toEndOf="@+id/mascotaView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/genero_rv"
+        android:layout_width="182dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="1dp"
+        android:text="Macho"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/generoView"
+        app:layout_constraintTop_toBottomOf="@+id/mascota_rv" />
+
+    <TextView
+        android:id="@+id/dueno_rv"
+        android:layout_width="184dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:text="Stephania"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/duenoView"
+        app:layout_constraintTop_toBottomOf="@+id/genero_rv" />
+
+    <TextView
+        android:id="@+id/dni_rv"
+        android:layout_width="208dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="4dp"
+        android:text="12345678"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/dniView"
+        app:layout_constraintTop_toBottomOf="@+id/dueno_rv" />
+
+    <TextView
+        android:id="@+id/descripcion_rv"
+        android:layout_width="155dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:text="Muy bonito"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/descripcionView"
+        app:layout_constraintTop_toBottomOf="@+id/dni_rv" />
+
+    <TextView
+        android:id="@+id/ruta_rv"
+        android:layout_width="197dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:text="San Miguel - San Miguel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/rutaView"
+        app:layout_constraintTop_toBottomOf="@+id/descripcion_rv" />
+</androidx.constraintlayout.widget.ConstraintLayout>

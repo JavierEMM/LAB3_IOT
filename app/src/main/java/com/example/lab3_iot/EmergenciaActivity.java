@@ -44,8 +44,8 @@ public class EmergenciaActivity extends AppCompatActivity implements SensorEvent
                     location -> {
                         if (location != null) {
                             //mostramos a unicacion con un textView
-                            //TextView t1 = findViewById(R.id.textViewLat);
-                            //TextView t2 = findViewById(R.id.textViewLong);
+                            TextView t1 = findViewById(R.id.editText_origen);
+                            TextView t2 = findViewById(R.id.editText_destino);
                             t1.setText(String.valueOf(location.getLatitude()));
                             t2.setText(String.valueOf(location.getLongitude()));
                         }
