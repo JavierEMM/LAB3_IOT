@@ -10,10 +10,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowInsetsAnimation;
 import android.widget.Button;
@@ -27,6 +29,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.lab3_iot.entity.Historial;
+import com.example.lab3_iot.entity.Mascota;
 import com.example.lab3_iot.models.ContadorActualizarMapa;
 import com.example.lab3_iot.models.ContadorViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -47,6 +51,7 @@ import com.google.maps.android.PolyUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -64,10 +69,23 @@ public class EmergenciaActivity extends AppCompatActivity  implements OnMapReady
     LatLng destino = null;
     String destinoStr = "";
     LatLng direccion = new LatLng(-12.084538, -77.031396);
+    ArrayList<Mascota> mascotas;
+    ArrayList<Historial> historials;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergencia);
+        Intent intent = getIntent();
+        if(intent.getSerializableExtra("lista") != null){
+            mascotas = (ArrayList<Mascota>) intent.getSerializableExtra("lista");
+        }else{
+            mascotas = new ArrayList<>();
+        }
+        if(intent.getSerializableExtra("historial") != null){
+            historials = (ArrayList<Historial>) intent.getSerializableExtra("historial");
+        }else{
+            historials = new ArrayList<>();
+        }
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -76,69 +94,92 @@ public class EmergenciaActivity extends AppCompatActivity  implements OnMapReady
         (button).setOnClickListener(view -> {
             if(contador1[0] == 0){
                 EditText view1 = findViewById(R.id.editText_destino);
+                EditText dni = findViewById(R.id.editText_dni);
                 if(view1.getText() != null && !view1.getText().toString().equals("")){
-                    int contador2 = 10*60;
-                    if(view1.getText().toString().contains("Lince") || destinoStr.contains("Lince")){
-                        contador2 = 10*60;
-                    }else if(view1.getText().toString().contains("San Isidro") || destinoStr.contains("San Isidro")){
-                        contador2 = 15*60;
-                    }else if(view1.getText().toString().contains("Magdalena") || destinoStr.contains("Magdalena")){
-                        contador2 = 20*60;
-                    }else if(view1.getText().toString().contains("Jesús María") || destinoStr.contains("Jesús María")){
-                        contador2 = 25*60;
+                    if (dni.getText().toString().equals("") || dni.getText().toString() == null) {
+                        dni.setError("Ingrese");
+                    } else if (dni.getText().toString().length() != 8) {
+                        dni.setError("Ingrese un DNI válido");
                     }else{
-                        Toast.makeText(EmergenciaActivity.this,"No hay cobertura, pero igual para verificar contador 10 min",Toast.LENGTH_SHORT).show();
-                    }
-                    ContadorViewModel contadorViewModel = new ViewModelProvider(this).get(ContadorViewModel.class);
-                    contadorViewModel.iniciarContador(contador2);
-                    contadorViewModel.getContador().observe(this, new Observer<String>() {
-                        @Override
-                        public void onChanged(String s) {
-                            TextView textView = findViewById(R.id.textView_contador);
-                            textView.setText(s);
-                        }
-                    });
-                    String destino2 = String.valueOf(view1.getText());
-                    ContadorActualizarMapa contadorActualizarMapa = new ViewModelProvider(this).get(ContadorActualizarMapa.class);
-                    contadorActualizarMapa.iniciarContador(contador2);
-                    contadorActualizarMapa.getContador().observe(this, new Observer<Integer>() {
-                        @Override
-                        public void onChanged(Integer integer) {
-                            try {
-                                url = getDirectionsUrl(direccion,destino2);
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
+                        Historial historial = new Historial();
+                        boolean bandera = false;
+                        for(Mascota mascota : mascotas){
+                            if(String.valueOf(mascota.getDni()).equals(dni.getText().toString())){
+                                historial.setMascota(mascota);
+                                bandera = true;
                             }
-                            if(!url.equals("") && url != null) {
-                                requestDirections(url);
-                                if(polyline != null){
-                                    mMap.clear();
-                                    mMap.addMarker(new MarkerOptions().position(origen));
-                                    mMap.addPolyline(new PolylineOptions().addAll(polyline));
-                                }else{
-                                    Toast.makeText(EmergenciaActivity.this,"Calculando ruta espere por favor",Toast.LENGTH_SHORT).show();
+                        }
+                        if(bandera){
+                            int contador2 = 10*60;
+                            if(view1.getText().toString().contains("Lince") || destinoStr.contains("Lince")){
+                                contador2 = 10*60;
+                                historial.setRuta("Lince");
+                            }else if(view1.getText().toString().contains("San Isidro") || destinoStr.contains("San Isidro")){
+                                contador2 = 15*60;
+                                historial.setRuta("San Isidro");
+                            }else if(view1.getText().toString().contains("Magdalena") || destinoStr.contains("Magdalena")){
+                                contador2 = 20*60;
+                                historial.setRuta("Magdalena");
+                            }else if(view1.getText().toString().contains("Jesús María") || destinoStr.contains("Jesús María")){
+                                contador2 = 25*60;
+                                historial.setRuta("Jesús María");
+                            }else{
+                                historial.setRuta(view1.getText().toString());
+                                Toast.makeText(EmergenciaActivity.this,"No hay cobertura, pero igual para verificar contador 10 min",Toast.LENGTH_LONG).show();
+                            }
+                            historials.add(historial);
+                            ContadorViewModel contadorViewModel = new ViewModelProvider(this).get(ContadorViewModel.class);
+                            contadorViewModel.iniciarContador(contador2);
+                            contadorViewModel.getContador().observe(this, new Observer<String>() {
+                                @Override
+                                public void onChanged(String s) {
+                                    TextView textView = findViewById(R.id.textView_contador);
+                                    textView.setText(s);
                                 }
-                            }
-                            LatLng latLng =  destino;
-                            if(latLng != null){
-                                MarkerOptions markerOptions = new MarkerOptions();
-                                markerOptions.position(latLng);
-                                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                                markerPoints.add(latLng);
-                                mMap.addMarker(markerOptions);
-                            }
+                            });
+                            String destino2 = String.valueOf(view1.getText());
+                            ContadorActualizarMapa contadorActualizarMapa = new ViewModelProvider(this).get(ContadorActualizarMapa.class);
+                            contadorActualizarMapa.iniciarContador(contador2);
+                            contadorActualizarMapa.getContador().observe(this, new Observer<Integer>() {
+                                @Override
+                                public void onChanged(Integer integer) {
+                                    try {
+                                        url = getDirectionsUrl(direccion,destino2);
+                                    } catch (UnsupportedEncodingException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if(!url.equals("") && url != null) {
+                                        requestDirections(url);
+                                        if(polyline != null){
+                                            mMap.clear();
+                                            mMap.addMarker(new MarkerOptions().position(origen));
+                                            mMap.addPolyline(new PolylineOptions().addAll(polyline));
+                                        }else{
+                                            Toast.makeText(EmergenciaActivity.this,"Calculando ruta espere por favor",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    LatLng latLng =  destino;
+                                    if(latLng != null){
+                                        MarkerOptions markerOptions = new MarkerOptions();
+                                        markerOptions.position(latLng);
+                                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                                        markerPoints.add(latLng);
+                                        mMap.addMarker(markerOptions);
+                                    }
+                                }
+                            });
+                            contador1[0]++;
+                        }else{
+                            dni.setError("Ingrese un dni registrado");
                         }
-                    });
-                    contador1[0]++;
+                    }
                 }else{
                     Toast.makeText(EmergenciaActivity.this,"Ingrese un destino valido",Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
     }
-
     private String getDirectionsUrl(LatLng origin, String dest) throws UnsupportedEncodingException {
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
         String str_dest =  dest+",Peru";
@@ -183,6 +224,19 @@ public class EmergenciaActivity extends AppCompatActivity  implements OnMapReady
         });
         queue.add(stringRequest);
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        if(item.getItemId() == android.R.id.home){
+            Intent intent1 = new Intent(EmergenciaActivity.this,MainActivity.class);
+            intent1.putExtra("lista", mascotas);
+            intent1.putExtra("historial", historials);
+            startActivity(intent1);
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {

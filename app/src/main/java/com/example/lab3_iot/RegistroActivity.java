@@ -6,13 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.lab3_iot.entity.Historial;
 import com.example.lab3_iot.entity.Mascota;
 import com.example.lab3_iot.entity.listaMascotas;
 
@@ -24,7 +27,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     public ArrayList<Mascota> mascotas;
     String genero;
-
+    ArrayList<Historial> historials;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +35,19 @@ public class RegistroActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent.getSerializableExtra("lista") != null){
             mascotas = (ArrayList<Mascota>) intent.getSerializableExtra("lista");
+            Log.d("msg","EXISTE MASCOTAS");
+            for(Mascota mascota : mascotas){
+                Log.d("msg", String.valueOf(mascota.getDni()));
+            }
         }else{
             mascotas = new ArrayList<>();
+            Log.d("msg","NO EXISTE MASCOTAS");
         }
-
+        if(intent.getSerializableExtra("historial") != null){
+            historials = (ArrayList<Historial>) intent.getSerializableExtra("historial");
+        }else{
+            historials = new ArrayList<>();
+        }
         List<String> genderSpinner = new ArrayList<>();
         genderSpinner.add("F-M");
         genderSpinner.add("F");
@@ -44,7 +56,9 @@ public class RegistroActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,genderSpinner);
         Spinner spinner = findViewById(R.id.spinner);
         spinner.setAdapter(arrayAdapter);
-
+        ((Button) findViewById(R.id.btnregistrar)).setOnClickListener(view -> {
+            returnNuevaMascota();
+        });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -55,12 +69,12 @@ public class RegistroActivity extends AppCompatActivity {
                     genero = opcionSpinner;
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 genero = "-";
             }
         });
+
     }
 
     @Override
@@ -68,6 +82,7 @@ public class RegistroActivity extends AppCompatActivity {
         if(item.getItemId() == android.R.id.home){
             Intent intent1 = new Intent(RegistroActivity.this,MainActivity.class);
             intent1.putExtra("lista", (Serializable) mascotas);
+            intent1.putExtra("historial",(Serializable) historials);
             startActivity(intent1);
             this.finish();
             return true;
@@ -75,7 +90,7 @@ public class RegistroActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void returnNuevaMascota(View view){
+    public void returnNuevaMascota(){
         EditText nombre = findViewById(R.id.nombre);
         EditText nombreDuenho = findViewById(R.id.nombreDuenho);
         EditText dni = findViewById(R.id.dni);
@@ -107,10 +122,10 @@ public class RegistroActivity extends AppCompatActivity {
             mascotas.add(mascota);
 
             Intent intent = new Intent(RegistroActivity.this,MainActivity.class);
-            intent.putExtra("lista", (Serializable) mascotas);
+            intent.putExtra("lista", mascotas);
+            intent.putExtra("historial", historials);
             startActivity(intent);
         }
-
     }
 
 

@@ -9,33 +9,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lab3_iot.entity.Historial;
 import com.example.lab3_iot.entity.Mascota;
 
-public class ListaMascotasAdapter extends RecyclerView.Adapter<ListaMascotasAdapter.MascotaViewHolder> {
+import java.util.ArrayList;
 
-    private Mascota[] listaMascotas;
+public class ListaHistorialAdapter extends RecyclerView.Adapter<ListaHistorialAdapter.HistorialViewHolder> {
+
+    private ArrayList<Historial> listaHistorial;
     private Context context;
 
-    class MascotaViewHolder extends RecyclerView.ViewHolder{
-        Mascota m;
+    public void setListaHistorial(ArrayList<Historial> listaHistorial) {
+        this.listaHistorial = listaHistorial;
+    }
 
-        public MascotaViewHolder(@NonNull View itemView) {
+    class HistorialViewHolder extends RecyclerView.ViewHolder{
+        Historial m;
+        public HistorialViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
 
     @NonNull
     @Override
-    public MascotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HistorialViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.item_rv,parent,false); //item_rv=nombre del layout
-        return new MascotaViewHolder(itemView);
-
+        return new HistorialViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MascotaViewHolder holder, int position) {
-        Mascota mascota = listaMascotas[position];
-        holder .m = mascota;
+    public void onBindViewHolder(@NonNull HistorialViewHolder holder, int position) {
+        Historial historial= listaHistorial.get(position);
+        holder.m = historial;
         //cambiar segun el nombre de los textview del layout y falta agregar el atributo ruta
         TextView tvNombreMascota = holder.itemView.findViewById(R.id.mascota_rv);
         TextView tvGenero = holder.itemView.findViewById(R.id.genero_rv);
@@ -44,18 +49,17 @@ public class ListaMascotasAdapter extends RecyclerView.Adapter<ListaMascotasAdap
         TextView tvDescripcion = holder.itemView.findViewById(R.id.descripcion_rv);
         TextView tvRuta = holder.itemView.findViewById(R.id.ruta_rv);
 
-        tvNombreMascota.setText(mascota.getNombreDuenho());
-        tvGenero.setText(mascota.getGenero());
-        tvDuenho.setText(mascota.getNombreDuenho());
-        tvDNI.setText(mascota.getDni());
-        tvDescripcion.setText(mascota.getDescripcion());
-        tvRuta.setText((mascota.getRuta() == null || mascota.getRuta().equals("")) ? "-" : mascota.getRuta());
-
+        tvNombreMascota.setText(historial.getMascota().getNombre());
+        tvGenero.setText(historial.getMascota().getGenero());
+        tvDuenho.setText(historial.getMascota().getNombreDuenho());
+        tvDNI.setText(String.valueOf(historial.getMascota().getDni()));
+        tvDescripcion.setText(historial.getMascota().getDescripcion());
+        tvRuta.setText((historial.getRuta() == null || historial.getRuta().equals("")) ? "-" : historial.getRuta());
     }
 
     @Override
     public int getItemCount() {
-        return listaMascotas.length;
+        return listaHistorial.size();
     }
 
     public Context getContext() {

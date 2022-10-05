@@ -133,7 +133,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="49dp"
             android:backgroundTint="#FFC107"
-            android:onClick="returnNuevaMascota"
             android:text="Registrar"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
